@@ -2,11 +2,14 @@ package com.mingrn.keeper.msg.mail.service.impl;
 
 import com.mingrn.keeper.msg.mail.service.MailSendService;
 import com.mingrn.keeper.msg.mail.enums.MailTemplateEnums;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,6 +37,9 @@ public class MailSendServiceImpl implements MailSendService {
     @Resource
     private JavaMailSender mailSender;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(MailSendServiceImpl.class);
+
+    @Async
     @Override
     public void sendTextMessage(String subject, String msg, String... receiver) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -44,18 +50,25 @@ public class MailSendServiceImpl implements MailSendService {
         mailSender.send(message);
     }
 
+    @Async
     @Override
     public void sendHtmlMessage(String subject, String htmlContent, String... receiver) {
+        LOGGER.info("----------开始发送邮件---------");
+        long start = System.currentTimeMillis();
         MimeMessage message = mailSender.createMimeMessage();
         mimeMessageHelperCreate(message, subject, htmlContent, receiver);
         mailSender.send(message);
+        LOGGER.info("----------邮件发送完成---------");
+        LOGGER.info("用时：{}  毫秒", System.currentTimeMillis() - start);
     }
 
+    @Async
     @Override
     public void sendHtmlMessage(String subject, MailTemplateEnums mailTemplate, String... receiver) {
         // TODO: 2019-02-19 模板信息
     }
 
+    @Async
     @Override
     public void sendAttachmentsMessage(String subject, String htmlContent, File[] files, String... receiver) {
         MimeMessage message = mailSender.createMimeMessage();
@@ -72,11 +85,13 @@ public class MailSendServiceImpl implements MailSendService {
         }
     }
 
+    @Async
     @Override
     public void sendAttachmentsMessage(String subject, MailTemplateEnums mailTemplate, File[] files, String... receiver) {
         // TODO: 2019-02-19 模板邮件信息
     }
 
+    @Async
     @Override
     public void sendInlineResourceMail(String subject, String htmlContent, String[] resourceIds, File[] files, String... receiver) {
         MimeMessage message = mailSender.createMimeMessage();
