@@ -2,6 +2,7 @@ package com.mingrn.keeper.msg.mail.service.impl;
 
 import com.mingrn.keeper.msg.mail.service.MailSendService;
 import com.mingrn.keeper.msg.mail.enums.MailTemplateEnums;
+import com.mingrn.keeper.msg.util.FreemarkerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,8 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 邮件消息发送业务类
@@ -52,7 +55,19 @@ public class MailSendServiceImpl implements MailSendService {
 
     @Async
     @Override
+    public void sendHtmlMessage(String subject, MailTemplateEnums mailTemplate, String... receiver) {
+        Map<String, Object> data = new HashMap<>(1);
+        data.put("user", "小明的姨夫");
+        String htmlContent = MailTemplateEnums.genTemplateHtml(mailTemplate, data);
+        sendHtmlMessage(subject, htmlContent, receiver);
+    }
+
+    @Async
+    @Override
     public void sendHtmlMessage(String subject, String htmlContent, String... receiver) {
+        Map<String, Object> data = new HashMap<>(1);
+        data.put("user", "小明的姨夫");
+        htmlContent = FreemarkerUtil.genFtl2String("register-verify.ftl", data);
         LOGGER.info("----------开始发送邮件---------");
         long start = System.currentTimeMillis();
         MimeMessage message = mailSender.createMimeMessage();
@@ -64,8 +79,8 @@ public class MailSendServiceImpl implements MailSendService {
 
     @Async
     @Override
-    public void sendHtmlMessage(String subject, MailTemplateEnums mailTemplate, String... receiver) {
-        // TODO: 2019-02-19 模板信息
+    public void sendAttachmentsMessage(String subject, MailTemplateEnums mailTemplate, File[] files, String... receiver) {
+        // TODO: 2019-02-19 模板邮件信息
     }
 
     @Async
@@ -83,12 +98,6 @@ public class MailSendServiceImpl implements MailSendService {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-    }
-
-    @Async
-    @Override
-    public void sendAttachmentsMessage(String subject, MailTemplateEnums mailTemplate, File[] files, String... receiver) {
-        // TODO: 2019-02-19 模板邮件信息
     }
 
     @Async

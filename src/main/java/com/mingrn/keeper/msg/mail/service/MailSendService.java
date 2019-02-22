@@ -24,15 +24,6 @@ public interface MailSendService {
     /**
      * 发送 HTML 邮件
      *
-     * @param subject     邮件标题
-     * @param htmlContent 邮件HTML 信息
-     * @param receiver    接收者,支持数组
-     */
-    void sendHtmlMessage(String subject, String htmlContent, String... receiver);
-
-    /**
-     * 发送 HTML 邮件
-     *
      * @param subject      邮件标题
      * @param mailTemplate 邮件 HTML 模板
      * @param receiver     接收者,支持数组
@@ -40,14 +31,13 @@ public interface MailSendService {
     void sendHtmlMessage(String subject, MailTemplateEnums mailTemplate, String... receiver);
 
     /**
-     * 发送带附件 HTML 邮件
+     * 发送 HTML 邮件
      *
      * @param subject     邮件标题
      * @param htmlContent 邮件HTML 信息
-     * @param files       文件
      * @param receiver    接收者,支持数组
      */
-    void sendAttachmentsMessage(String subject, String htmlContent, File[] files, String... receiver);
+    void sendHtmlMessage(String subject, String htmlContent, String... receiver);
 
     /**
      * 发送带附件 HTML 邮件
@@ -58,6 +48,16 @@ public interface MailSendService {
      * @param receiver     接收者,支持数组
      */
     void sendAttachmentsMessage(String subject, MailTemplateEnums mailTemplate, File[] files, String... receiver);
+
+    /**
+     * 发送带附件 HTML 邮件
+     *
+     * @param subject     邮件标题
+     * @param htmlContent 邮件HTML 信息
+     * @param files       文件
+     * @param receiver    接收者,支持数组
+     */
+    void sendAttachmentsMessage(String subject, String htmlContent, File[] files, String... receiver);
 
     /**
      * 发送带静态资源 HTML 邮件
