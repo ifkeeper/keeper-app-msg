@@ -1,8 +1,10 @@
 package com.mingrn.keeper.msg;
 
+import com.mingrn.keeper.msg.mail.enums.MailTemplateEnums;
 import com.mingrn.keeper.msg.mail.service.MailSendService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import javax.annotation.Resource;
 
 @EnableAsync
 @RestController
+@EnableDiscoveryClient
 @SpringBootApplication
 @ComponentScan(basePackages = "com.mingrn.keeper")
 public class KeeperAppMsgApplication {
@@ -26,9 +29,7 @@ public class KeeperAppMsgApplication {
 
     @PostMapping("/sendHtmlMessage")
     public String sendHtmlMessage(@RequestParam String subject, @RequestParam String htmlContent, @RequestParam String... receiver) {
-        for (int i = 0; i < 100; i++) {
-            mailSendService.sendHtmlMessage(subject, htmlContent, receiver);
-        }
+        mailSendService.sendHtmlMessage(subject, MailTemplateEnums.REGISTER_VERIFY, receiver);
         return "success";
     }
 
