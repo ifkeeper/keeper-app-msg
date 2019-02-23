@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableDiscoveryClient
 @SpringBootApplication
 @ComponentScan(basePackages = "com.mingrn.keeper")
-public class KeeperAppMsgApplication {
+public class MsgApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(KeeperAppMsgApplication.class, args);
+        SpringApplication.run(MsgApplication.class, args);
     }
 
 }
