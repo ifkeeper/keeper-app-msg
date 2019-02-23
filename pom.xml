@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>keeper-app-msg</artifactId>
-    <version>${parent.version}</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <parent>
@@ -13,35 +13,43 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <properties>
+        <keeper.mybatis-generator.version>0.0.1-SNAPSHOT</keeper.mybatis-generator.version>
+        <keeper.global-handler.version>0.0.1-SNAPSHOT</keeper.global-handler.version>
+        <keeper.commons-utils.version>0.0.1-SNAPSHOT</keeper.commons-utils.version>
+        <keeper.mybatis-core.version>0.0.1-SNAPSHOT</keeper.mybatis-core.version>
+        <keeper.base.version>0.0.1-SNAPSHOT</keeper.base.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>${parent.groupId}</groupId>
             <artifactId>keeper-mybatis-generator</artifactId>
-            <version>${parent.version}</version>
+            <version>${keeper.mybatis-generator.version}</version>
         </dependency>
 
         <dependency>
             <groupId>${parent.groupId}</groupId>
             <artifactId>keeper-global-handler</artifactId>
-            <version>${parent.version}</version>
+            <version>${keeper.global-handler.version}</version>
         </dependency>
 
         <dependency>
             <groupId>${parent.groupId}</groupId>
             <artifactId>keeper-mybatis-core</artifactId>
-            <version>${parent.version}</version>
+            <version>${keeper.mybatis-core.version}</version>
         </dependency>
 
         <dependency>
             <groupId>${parent.groupId}</groupId>
             <artifactId>keeper-base</artifactId>
-            <version>${parent.version}</version>
+            <version>${keeper.base.version}</version>
         </dependency>
 
         <dependency>
             <groupId>${parent.groupId}</groupId>
             <artifactId>keeper-commons-utils</artifactId>
-            <version>${parent.version}</version>
+            <version>${keeper.commons-utils.version}</version>
         </dependency>
 
         <!--Eureka Client-->
