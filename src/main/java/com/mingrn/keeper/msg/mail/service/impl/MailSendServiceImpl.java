@@ -1,8 +1,8 @@
 package com.mingrn.keeper.msg.mail.service.impl;
 
+import com.mingrn.keeper.commons.utils.ftl.FreemarkerUtil;
 import com.mingrn.keeper.msg.mail.service.MailSendService;
 import com.mingrn.keeper.msg.mail.enums.MailTemplateEnums;
-import com.mingrn.keeper.msg.util.FreemarkerUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,7 +28,7 @@ import java.util.Map;
  * @author MinGRn <br > MinGRn97@gmail.com
  * @date 2019-02-20 09:35
  */
-@Service
+@Service("mailSendService")
 public class MailSendServiceImpl implements MailSendService {
 
     @Value("${spring.mail.from.user}")

@@ -1,7 +1,7 @@
 package com.mingrn.keeper.msg.mail.enums;
 
+import com.mingrn.keeper.commons.utils.ftl.FreemarkerUtil;
 import com.mingrn.keeper.global.annotation.Checked;
-import com.mingrn.keeper.msg.util.FreemarkerUtil;
 
 import javax.validation.constraints.NotNull;
 import java.util.Map;
@@ -25,7 +25,7 @@ public enum MailTemplateEnums {
     }
 
     @Checked
-    public static String genTemplateHtml(@NotNull MailTemplateEnums templateEnums, Map<String, Object> data) {
+    public static String genTemplateHtml(MailTemplateEnums templateEnums, Map<String, Object> data) {
         return FreemarkerUtil.genFtl2String(templateEnums.getTemplate(), data);
     }
 
