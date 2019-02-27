@@ -6,6 +6,7 @@ import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -38,6 +39,9 @@ public class AsycTaskConfig implements AsyncConfigurer {
      * ① ThreadPoolExecutor.AbortPolicy 默认处理策略,处理程序遇到拒绝将抛出运行时 RejectedExecutionException
      * ② ThreadPoolExecutor.CallerRunsPolicy 程序调用运行该任务的 execute 本身。此策略提供简单的反馈控制机制,能够减缓新任务提交速度
      * ④ ThreadPoolExecutor.DiscardOldestPolicy 如果程序尚未关闭,则位于工作列表头部的任务将删除,然后重新执行程序(如果再次失败,则重复此过程)
+     * 可参考如下博客:
+     * <a href="https://www.weypage.com/2018/10/03/java-mail/#more">springboot异步发送邮件</a>
+     * <a href="http://blog.didispace.com/springbootasync-3/">使用@Async实现异步调用：ThreadPoolTaskScheduler线程池的优雅关闭</a>
      */
     @Override
     public Executor getAsyncExecutor() {
@@ -55,6 +59,24 @@ public class AsycTaskConfig implements AsyncConfigurer {
         // 初始化线程池
         taskExecutor.initialize();
         return taskExecutor;
+
+        /*ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setDaemon(true);
+        // 设置线程池中任务的等待时间,如果超过这个时候还没有销毁就强制销毁
+        scheduler.setAwaitTerminationSeconds(60);
+        // 设置线程核心数,机器核心数*3
+        scheduler.setPoolSize(AVAILABLE_PROCESSORS * 3);
+        // 设置线程名称前缀
+        scheduler.setThreadNamePrefix("async-task-thread-");
+        // 设置线程池关闭的时候等待所有任务都完成再继续销毁其他的Bean
+        // 这样设置在使用 Redis 缓存时,异步任务的销毁就会先于Redis线程池的销毁避免 redis 抛出如下异常
+        // JedisConnectionException: Could not get a resource from the pool
+        scheduler.setWaitForTasksToCompleteOnShutdown(true);
+        // 对拒绝 task 的处理策略
+        scheduler.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        // 初始化线程池
+        scheduler.initialize();
+        return scheduler;*/
     }
 
     @Override
