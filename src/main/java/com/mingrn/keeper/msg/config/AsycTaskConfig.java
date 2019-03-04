@@ -54,6 +54,10 @@ public class AsycTaskConfig implements AsyncConfigurer {
         taskExecutor.setQueueCapacity(999);
         // 对拒绝 task 的处理策略
         taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+        // 设置线程池关闭的时候等待所有任务都完成再继续销毁其他的Bean
+        // 该设置为防止如使用 Redis 缓存时,保证异步任务的销毁先于 Redis 线程池的销毁,避免 Redis 抛出如下异常:
+        // JedisConnectionException: Could not get a resource from the pool
+        taskExecutor.setWaitForTasksToCompleteOnShutdown(true);
         // 线程名前缀
         taskExecutor.setThreadNamePrefix("async-task-thread-");
         // 初始化线程池
@@ -69,7 +73,7 @@ public class AsycTaskConfig implements AsyncConfigurer {
         // 设置线程名称前缀
         scheduler.setThreadNamePrefix("async-task-thread-");
         // 设置线程池关闭的时候等待所有任务都完成再继续销毁其他的Bean
-        // 这样设置在使用 Redis 缓存时,异步任务的销毁就会先于Redis线程池的销毁避免 redis 抛出如下异常
+        // 该设置为防止如使用 Redis 缓存时,保证异步任务的销毁先于 Redis 线程池的销毁,避免 Redis 抛出如下异常:
         // JedisConnectionException: Could not get a resource from the pool
         scheduler.setWaitForTasksToCompleteOnShutdown(true);
         // 对拒绝 task 的处理策略
