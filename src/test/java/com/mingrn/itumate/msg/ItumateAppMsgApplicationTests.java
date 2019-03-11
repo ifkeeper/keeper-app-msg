@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class itumateAppMsgApplicationTests {
+public class ItumateAppMsgApplicationTests {
 
     @Test
     public void contextLoads() {
