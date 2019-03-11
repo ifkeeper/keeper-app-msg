@@ -1,4 +1,4 @@
-package com.mingrn.keeper.msg.config;
+package com.mingrn.itumate.msg.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,8 +1,8 @@
-package com.mingrn.keeper.msg.mail.service.impl;
+package com.mingrn.itumate.msg.mail.service.impl;
 
-import com.mingrn.keeper.commons.utils.ftl.FreemarkerUtil;
-import com.mingrn.keeper.msg.mail.service.MailSendService;
-import com.mingrn.keeper.msg.mail.enums.MailTemplateEnums;
+import com.mingrn.itumate.commons.utils.ftl.FreemarkerUtil;
+import com.mingrn.itumate.msg.mail.service.MailSendService;
+import com.mingrn.itumate.msg.mail.enums.MailTemplateEnums;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

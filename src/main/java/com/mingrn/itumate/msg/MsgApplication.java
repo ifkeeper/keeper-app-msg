@@ -1,4 +1,4 @@
-package com.mingrn.keeper.msg;
+package com.mingrn.itumate.msg;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @EnableDiscoveryClient
 @SpringBootApplication
-@ComponentScan(basePackages = "com.mingrn.keeper")
+@ComponentScan(basePackages = "com.mingrn.itumate")
 public class MsgApplication {
 
     public static void main(String[] args) {

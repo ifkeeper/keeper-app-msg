@@ -1,11 +1,11 @@
-package com.mingrn.keeper.msg.web;
+package com.mingrn.itumate.msg.web;
 
-import com.mingrn.keeper.global.annotation.Checked;
-import com.mingrn.keeper.global.annotation.ParamsIsNotNull;
-import com.mingrn.keeper.global.result.ResponseMsgUtil;
-import com.mingrn.keeper.global.result.Result;
-import com.mingrn.keeper.msg.mail.enums.MailTemplateEnums;
-import com.mingrn.keeper.msg.mail.service.MailSendService;
+import com.mingrn.itumate.global.annotation.Checked;
+import com.mingrn.itumate.global.annotation.ParamsIsNotNull;
+import com.mingrn.itumate.global.result.ResponseMsgUtil;
+import com.mingrn.itumate.global.result.Result;
+import com.mingrn.itumate.msg.mail.enums.MailTemplateEnums;
+import com.mingrn.itumate.msg.mail.service.MailSendService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;

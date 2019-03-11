@@ -1,7 +1,7 @@
-package com.mingrn.keeper.msg.mail.enums;
+package com.mingrn.itumate.msg.mail.enums;
 
-import com.mingrn.keeper.commons.utils.ftl.FreemarkerUtil;
-import com.mingrn.keeper.global.annotation.Checked;
+import com.mingrn.itumate.commons.utils.ftl.FreemarkerUtil;
+import com.mingrn.itumate.global.annotation.Checked;
 
 import javax.validation.constraints.NotNull;
 import java.util.Map;

@@ -1,6 +1,6 @@
-package com.mingrn.keeper.msg.mail.service;
+package com.mingrn.itumate.msg.mail.service;
 
-import com.mingrn.keeper.msg.mail.enums.MailTemplateEnums;
+import com.mingrn.itumate.msg.mail.enums.MailTemplateEnums;
 
 import java.io.File;
 
