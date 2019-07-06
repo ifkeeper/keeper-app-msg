@@ -66,7 +66,7 @@
     </div>
     <div class="line"></div>
     <div class="footer">
-        <span>此信息有<a href="">侣行网</a>系统发出，系统不接收回信，请勿直接回复</span>
+        <span>此信息由<a href="">侣行网</a>系统发出，系统不接收回信，请勿直接回复</span>
         <span>如有任何疑问请 <a href="">联系我们</a>。 </span>
     </div>
 </div>
