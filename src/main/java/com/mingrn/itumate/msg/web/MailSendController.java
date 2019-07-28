@@ -1,6 +1,7 @@
 package com.mingrn.itumate.msg.web;
 
 import com.mingrn.itumate.global.annotation.Checked;
+import com.mingrn.itumate.global.annotation.MailValid;
 import com.mingrn.itumate.global.annotation.ParamsIsNotNull;
 import com.mingrn.itumate.global.result.ResponseMsgUtil;
 import com.mingrn.itumate.global.result.Result;
@@ -17,7 +18,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -53,7 +53,7 @@ public class MailSendController {
             @ApiImplicitParam(paramType = "query", dataTypeClass = String.class, required = true, name = "receiver", value = "接收者邮件,支持数组")
     })
     public Result sendTextMessage(@RequestParam @ParamsIsNotNull String subject,
-                                  @RequestParam @ParamsIsNotNull String msg, @RequestParam @ParamsIsNotNull String... receiver) {
+                                  @RequestParam @ParamsIsNotNull String msg, @RequestParam @MailValid String... receiver) {
         mailSendService.sendTextMessage(subject, msg, receiver);
         return ResponseMsgUtil.success();
     }
@@ -73,7 +73,7 @@ public class MailSendController {
     })
     public Result sendHtmlMessage(@RequestParam @ParamsIsNotNull String subject,
                                   @RequestParam @ParamsIsNotNull String htmlContent,
-                                  @RequestParam @ParamsIsNotNull String... receiver) {
+                                  @RequestParam @MailValid String... receiver) {
         mailSendService.sendHtmlMessage(subject, htmlContent, receiver);
         return ResponseMsgUtil.success();
     }
@@ -96,12 +96,12 @@ public class MailSendController {
             @ApiImplicitParam(paramType = "query", dataTypeClass = MailTemplateEnums.class, required = true, name = "templateEnums", value = "邮件模板")
     })
     public Result sendHtmlMessageWithTemplate(@RequestParam @ParamsIsNotNull String subject,
-                                              @RequestParam @ParamsIsNotNull String receiverMail,
+                                              @RequestParam @MailValid String receiverMail,
                                               @RequestParam @ParamsIsNotNull String receiverNickName,
                                               @RequestParam @ParamsIsNotNull MailTemplateEnums templateEnums) {
 
         Map<String, Object> data = new HashMap<>(1);
-        data.put("userName", receiverNickName);
+        data.put("nickName", receiverNickName);
 
         mailSendService.sendHtmlMessage(subject, templateEnums, data, receiverMail);
         return ResponseMsgUtil.success();
@@ -126,7 +126,7 @@ public class MailSendController {
             @ApiImplicitParam(paramType = "query", dataTypeClass = String.class, required = true, name = "htmlContent", value = "HTML邮件内容")
     })
     public Result sendAttachmentsMessage(@RequestParam @ParamsIsNotNull String subject,
-                                         @RequestParam @ParamsIsNotNull String receiverMail,
+                                         @RequestParam @MailValid String receiverMail,
                                          @RequestParam @ParamsIsNotNull String htmlContent,
                                          @ApiParam(value = "上传文件") @RequestParam(name = "multipartFile", required = false) MultipartFile multipartFile) throws IOException, MessagingException {
 
@@ -154,13 +154,13 @@ public class MailSendController {
             @ApiImplicitParam(paramType = "query", dataTypeClass = MailTemplateEnums.class, required = true, name = "templateEnums", value = "邮件模板")
     })
     public Result sendAttachmentsMessageWithTemplate(@RequestParam @ParamsIsNotNull String subject,
-                                                     @RequestParam @ParamsIsNotNull String receiverMail,
+                                                     @RequestParam @MailValid String receiverMail,
                                                      @RequestParam @ParamsIsNotNull String receiverNickName,
                                                      @RequestParam @ParamsIsNotNull MailTemplateEnums templateEnums,
                                                      @ApiParam(value = "上传文件") @RequestParam(name = "multipartFile", required = false) MultipartFile multipartFile) throws IOException, MessagingException {
 
         Map<String, Object> data = new HashMap<>(1);
-        data.put("user", receiverNickName);
+        data.put("nickName", receiverNickName);
 
         mailSendService.sendAttachmentsMessage(subject, templateEnums, data, new MultipartFile[]{multipartFile}, receiverMail);
         return ResponseMsgUtil.success();

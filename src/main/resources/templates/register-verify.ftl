@@ -55,7 +55,7 @@
     <div>
         <span style="font-size: larger;font-weight: bolder">侣行网：</span><br/>
         <div class="content">
-            <span>亲爱的 ${user}：</span><br/>
+            <span>亲爱的 ${nickName}：</span><br/>
             <span>请点击下面的链接激活账号完成注册。（请在24小时内完成）</span>
             <span>
                 <!--<a href="http://www.baidu.com">http://www.baidu.com</a>-->
