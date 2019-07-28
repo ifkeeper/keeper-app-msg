@@ -35,10 +35,13 @@ public class AsycTaskConfig implements AsyncConfigurer {
 
     /**
      * 对拒绝 task 的处理策略:
-     * ③ ThreadPoolExecutor.DiscardPolicy 不能执行的任务将被删除
-     * ① ThreadPoolExecutor.AbortPolicy 默认处理策略,处理程序遇到拒绝将抛出运行时 RejectedExecutionException
-     * ② ThreadPoolExecutor.CallerRunsPolicy 程序调用运行该任务的 execute 本身。此策略提供简单的反馈控制机制,能够减缓新任务提交速度
-     * ④ ThreadPoolExecutor.DiscardOldestPolicy 如果程序尚未关闭,则位于工作列表头部的任务将删除,然后重新执行程序(如果再次失败,则重复此过程)
+     * <ul>
+     *     <li>ThreadPoolExecutor.DiscardPolicy 不能执行的任务将被删除</li>
+     *     <li>ThreadPoolExecutor.AbortPolicy 默认处理策略,处理程序遇到拒绝将抛出运行时 RejectedExecutionException</li>
+     *     <li>ThreadPoolExecutor.CallerRunsPolicy 程序调用运行该任务的 execute 本身。此策略提供简单的反馈控制机制,能够减缓新任务提交速度</li>
+     *     <li>ThreadPoolExecutor.DiscardOldestPolicy 如果程序尚未关闭,则位于工作列表头部的任务将删除,然后重新执行程序(如果再次失败,则重复此过程)</li>
+     * </ul>
+     * 
      * 可参考如下博客:
      * <a href="https://www.weypage.com/2018/10/03/java-mail/#more">springboot异步发送邮件</a>
      * <a href="http://blog.didispace.com/springbootasync-3/">使用@Async实现异步调用：ThreadPoolTaskScheduler线程池的优雅关闭</a>
