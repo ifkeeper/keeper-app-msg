@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @EnableAsync
-@RestController
 @EnableDiscoveryClient
 @SpringBootApplication
 @ComponentScan(basePackages = "com.mingrn.itumate")
