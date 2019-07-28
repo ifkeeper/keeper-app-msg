@@ -10,6 +10,7 @@ import com.mingrn.itumate.msg.mail.service.MailSendService;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -137,15 +138,22 @@ public class MailSendController {
 
     /**
      * 发送带附件 HTML 模板邮件
+     * <p>
+     * 表单入参文件数组，上传多个文件
+     * 在 <code>RequestMapping</code>中添加 <code>consumes = "multipart/form-data"</code> 可以支持多文件数组上传,
+     * 否则 Swagger 将自动将Content-Type设置为 <code>application/json</code>.
+     * <p>
+     * 注意:设置之后Swagger还是无法选择多个文件进行接口测试的,只是显示可以传递文件数组,这时可以采用 Postman 或 RestClient
+     * 等接口测试工具进行接口测试,多文件上传建议使用 <code>@ApiParam</code> 注解
      *
      * @param subject          邮件标题
      * @param receiverMail     接收者邮件
      * @param receiverNickName 接收者用户名称
      * @param templateEnums    邮件HTML模板 信息
-     * @param multipartFile    附件
+     * @param multipartFiles   附件
      */
     @Checked
-    @PostMapping(value = "/sendAttachmentsMessageWithTemplate", consumes = "multipart/*", headers = "Content-Type=multipart/form-data")
+    @PostMapping(value = "/sendAttachmentsMessageWithTemplate", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "发送带附件 HTML 模板邮件")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", dataTypeClass = String.class, required = true, name = "subject", value = "邮件主题"),
@@ -157,12 +165,12 @@ public class MailSendController {
                                                      @RequestParam @MailValid String receiverMail,
                                                      @RequestParam @ParamsIsNotNull String receiverNickName,
                                                      @RequestParam @ParamsIsNotNull MailTemplateEnums templateEnums,
-                                                     @ApiParam(value = "上传文件") @RequestParam(name = "multipartFile", required = false) MultipartFile multipartFile) throws IOException, MessagingException {
+                                                     @ApiParam(value = "上传文件", name = "multipartFiles") MultipartFile[] multipartFiles) throws IOException, MessagingException {
 
         Map<String, Object> data = new HashMap<>(1);
         data.put("nickName", receiverNickName);
 
-        mailSendService.sendAttachmentsMessage(subject, templateEnums, data, new MultipartFile[]{multipartFile}, receiverMail);
+        mailSendService.sendAttachmentsMessage(subject, templateEnums, data, multipartFiles, receiverMail);
         return ResponseMsgUtil.success();
     }
 }
