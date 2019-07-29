@@ -1,7 +1,7 @@
 package com.mingrn.itumate.msg.mail.service.impl;
 
 import com.mingrn.itumate.commons.utils.file.FileUpDownUtils;
-import com.mingrn.itumate.commons.utils.file.FileWrap;
+import com.mingrn.itumate.commons.utils.file.FileWrapper;
 import com.mingrn.itumate.msg.mail.service.MailSendService;
 import com.mingrn.itumate.msg.mail.enums.MailTemplateEnums;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +25,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * 邮件消息发送业务类
@@ -81,19 +80,19 @@ public class MailSendServiceImpl implements MailSendService {
 
     @Async
     @Override
-    public void sendAttachmentsMessage(String subject, MailTemplateEnums mailTemplate, Map<String, Object> data, FileWrap[] files, String... receiver) throws MessagingException {
+    public void sendAttachmentsMessage(String subject, MailTemplateEnums mailTemplate, Map<String, Object> data, FileWrapper[] files, String... receiver) throws MessagingException {
         String htmlContent = MailTemplateEnums.genTemplateHtml(mailTemplate, data);
         sendAttachmentsMessage(subject, htmlContent, files, true, receiver);
     }
 
     @Async
     @Override
-    public void sendAttachmentsMessage(String subject, String htmlContent, FileWrap[] files, Boolean useHtml, String... receiver) throws MessagingException {
+    public void sendAttachmentsMessage(String subject, String htmlContent, FileWrapper[] files, Boolean useHtml, String... receiver) throws MessagingException {
         LOGGER.info("----------开始发送附件HTML邮件---------");
         long start = System.currentTimeMillis();
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = mimeMessageHelperCreate(message, subject, htmlContent, useHtml, receiver);
-        for (FileWrap file : files) {
+        for (FileWrapper file : files) {
             helper.addAttachment(file.getName(), file.getFile());
         }
         mailSender.send(message);
@@ -109,7 +108,7 @@ public class MailSendServiceImpl implements MailSendService {
 
     @Override
     public void sendAttachmentsMessage(String subject, String htmlContent, MultipartFile[] multipartFiles, Boolean useHtml, String... receiver) throws MessagingException, IOException {
-        List<FileWrap> fileWraps = new ArrayList<>(multipartFiles.length);
+        List<FileWrapper> fileWraps = new ArrayList<>(multipartFiles.length);
         for (MultipartFile multipartFile : multipartFiles) {
             if (multipartFile != null && StringUtils.isNotBlank(multipartFile.getOriginalFilename())) {
                 String fileName = multipartFile.getOriginalFilename();
@@ -117,10 +116,10 @@ public class MailSendServiceImpl implements MailSendService {
                 File file = new File(fileRealPath);
                 file.delete();
                 multipartFile.transferTo(file);
-                fileWraps.add(new FileWrap(fileName, file));
+                fileWraps.add(new FileWrapper(fileName, file));
             }
         }
-        this.sendAttachmentsMessage(subject, htmlContent, fileWraps.toArray(new FileWrap[fileWraps.size()]), useHtml, receiver);
+        this.sendAttachmentsMessage(subject, htmlContent, fileWraps.toArray(new FileWrapper[fileWraps.size()]), useHtml, receiver);
     }
 
     /*@Async

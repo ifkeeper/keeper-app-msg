@@ -1,6 +1,6 @@
 package com.mingrn.itumate.msg.service;
 
-import com.mingrn.itumate.commons.utils.file.FileWrap;
+import com.mingrn.itumate.commons.utils.file.FileWrapper;
 import com.mingrn.itumate.msg.mail.enums.MailTemplateEnums;
 import com.mingrn.itumate.msg.mail.service.MailSendService;
 import org.junit.Test;
@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.io.File;
@@ -38,8 +37,8 @@ public class MailSendServiceTests {
     public void sendAttachmentsMessage() throws MessagingException {
         Map<String, Object> data = new HashMap<>();
         data.put("user", "Linda");
-        FileWrap[] fileWraps = new FileWrap[1];
-        fileWraps[0] = new FileWrap(new File("/Users/mingrn/Downloads/整体流程.png"));
+        FileWrapper[] fileWraps = new FileWrapper[1];
+        fileWraps[0] = new FileWrapper(new File("/Users/mingrn/Downloads/整体流程.png"));
 
         mailSendService.sendAttachmentsMessage("侣行网测试HTML邮件", MailTemplateEnums.REGISTER_VERIFY, data, fileWraps, "itumate@qq.com");
     }

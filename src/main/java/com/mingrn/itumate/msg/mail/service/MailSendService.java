@@ -1,6 +1,6 @@
 package com.mingrn.itumate.msg.mail.service;
 
-import com.mingrn.itumate.commons.utils.file.FileWrap;
+import com.mingrn.itumate.commons.utils.file.FileWrapper;
 import com.mingrn.itumate.msg.mail.enums.MailTemplateEnums;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -77,12 +77,12 @@ public interface MailSendService {
      * @param receiver     接收者,支持数组
      * @throws MessagingException
      */
-    void sendAttachmentsMessage(String subject, MailTemplateEnums mailTemplate, Map<String, Object> data, FileWrap[] files, String... receiver) throws MessagingException;
+    void sendAttachmentsMessage(String subject, MailTemplateEnums mailTemplate, Map<String, Object> data, FileWrapper[] files, String... receiver) throws MessagingException;
 
     /**
      * 发送带附件 HTML 邮件
      * <p>
-     * 可参考 {@link #sendAttachmentsMessage(String, MailTemplateEnums, Map, FileWrap[], String...)}
+     * 可参考 {@link #sendAttachmentsMessage(String, MailTemplateEnums, Map, FileWrapper[], String...)}
      *
      * @param subject     邮件标题
      * @param htmlContent 邮件HTML 信息
@@ -91,7 +91,7 @@ public interface MailSendService {
      * @param useHtml     是否使用HTML
      * @throws MessagingException
      */
-    void sendAttachmentsMessage(String subject, String htmlContent, FileWrap[] files, Boolean useHtml, String... receiver) throws MessagingException;
+    void sendAttachmentsMessage(String subject, String htmlContent, FileWrapper[] files, Boolean useHtml, String... receiver) throws MessagingException;
 
     /**
      * 发送带附件 HTML 邮件

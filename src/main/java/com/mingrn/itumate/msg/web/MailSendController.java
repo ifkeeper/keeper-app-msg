@@ -112,13 +112,13 @@ public class MailSendController {
     /**
      * 发送带附件 HTML 邮件
      *
-     * @param subject       邮件标题
-     * @param receiverMail  接收者邮件
-     * @param htmlContent   HTML邮件内容
-     * @param multipartFile 附件
+     * @param subject        邮件标题
+     * @param receiverMail   接收者邮件
+     * @param htmlContent    HTML邮件内容
+     * @param multipartFiles 附件,支持批量
      */
     @Checked
-    @PostMapping(value = "/sendAttachmentsMessage", consumes = "multipart/*", headers = "Content-Type=multipart/form-data")
+    @PostMapping(value = "/sendAttachmentsMessage", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "发送带附件 HTML 模板邮件")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "query", dataTypeClass = String.class, required = true, name = "subject", value = "邮件主题"),
@@ -129,9 +129,9 @@ public class MailSendController {
     public Result sendAttachmentsMessage(@RequestParam @ParamsIsNotNull String subject,
                                          @RequestParam @MailValid String receiverMail,
                                          @RequestParam @ParamsIsNotNull String htmlContent,
-                                         @ApiParam(value = "上传文件") @RequestParam(name = "multipartFile", required = false) MultipartFile multipartFile) throws IOException, MessagingException {
+                                         @ApiParam(value = "上传文件,支持批量") @RequestParam(name = "multipartFiles", required = false) MultipartFile[] multipartFiles) throws IOException, MessagingException {
 
-        mailSendService.sendAttachmentsMessage(subject, htmlContent, new MultipartFile[]{multipartFile}, true,receiverMail);
+        mailSendService.sendAttachmentsMessage(subject, htmlContent, multipartFiles, true, receiverMail);
         return ResponseMsgUtil.success();
     }
 
@@ -165,7 +165,7 @@ public class MailSendController {
                                                      @RequestParam @MailValid String receiverMail,
                                                      @RequestParam @ParamsIsNotNull String receiverNickName,
                                                      @RequestParam @ParamsIsNotNull MailTemplateEnums templateEnums,
-                                                     @ApiParam(value = "上传文件", name = "multipartFiles") MultipartFile[] multipartFiles) throws IOException, MessagingException {
+                                                     @ApiParam(value = "上传文件,支持批量", name = "multipartFiles") MultipartFile[] multipartFiles) throws IOException, MessagingException {
 
         Map<String, Object> data = new HashMap<>(1);
         data.put("nickName", receiverNickName);
